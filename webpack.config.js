@@ -110,8 +110,9 @@ module.exports = [
             filename: '[name].js'
         },
         externals: {
-            React: 'react',
-            ReactDOM: 'react-dom'
+            'React': 'React',
+            'ReactDOM': 'ReactDOM',
+            'scratch-vm': 'VirtualMachine'
         },
         module: {
             rules: base.module.rules.concat([
@@ -179,6 +180,10 @@ module.exports = [
             new CopyWebpackPlugin([{
                 from: 'extension-worker.{js,js.map}',
                 context: 'node_modules/scratch-vm/dist/web'
+            }]),
+            new CopyWebpackPlugin([{
+                from: 'scratch-vm.min.{js,js.map}',
+                context: 'node_modules/scratch-vm/dist/web'
             }])
         ])
     })
@@ -196,8 +201,9 @@ module.exports = [
                 publicPath: `${STATIC_PATH}/`
             },
             externals: {
-                React: 'react',
-                ReactDOM: 'react-dom'
+                'React': 'React',
+                'ReactDOM': 'ReactDOM',
+                'scratch-vm': 'VirtualMachine'
             },
             module: {
                 rules: base.module.rules.concat([
@@ -218,6 +224,10 @@ module.exports = [
                 }]),
                 new CopyWebpackPlugin([{
                     from: 'extension-worker.{js,js.map}',
+                    context: 'node_modules/scratch-vm/dist/web'
+                }]),
+                new CopyWebpackPlugin([{
+                    from: 'scratch-vm.min.{js,js.map}',
                     context: 'node_modules/scratch-vm/dist/web'
                 }]),
                 // Include library JSON files for scratch-desktop to use for downloading
