@@ -201,8 +201,8 @@ module.exports = [
                 publicPath: `${STATIC_PATH}/`
             },
             externals: {
-                'React': 'React',
-                'ReactDOM': 'ReactDOM',
+                'react': 'React',
+                'react-dom': 'ReactDOM',
                 'scratch-vm': 'VirtualMachine'
             },
             module: {
