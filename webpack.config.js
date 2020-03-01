@@ -110,8 +110,8 @@ module.exports = [
             filename: '[name].js'
         },
         externals: {
-            'React': 'React',
-            'ReactDOM': 'ReactDOM',
+            'react': 'React',
+            'react-dom': 'ReactDOM',
             'scratch-vm': 'VirtualMachine'
         },
         module: {
