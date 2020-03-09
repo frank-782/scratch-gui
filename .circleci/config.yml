@@ -53,17 +53,17 @@ jobs:
       - run: npm install
       - *save_git_cache
       - *save_npm_cache
-  lint:
-    <<: *defaults
-    steps:
-      - *restore_git_cache
-      - checkout
-      - *restore_npm_cache
-      - run:
-          name: Lint
-          command: npm run test:lint -- --quiet --output-file test-results/eslint/results.xml --format junit
-      - store_test_results:
-          path: test-results
+#   lint:
+#     <<: *defaults
+#     steps:
+#       - *restore_git_cache
+#       - checkout
+#       - *restore_npm_cache
+#       - run:
+#           name: Lint
+#           command: npm run test:lint -- --quiet --output-file test-results/eslint/results.xml --format junit
+#       - store_test_results:
+#           path: test-results
 #   unit:
 #     <<: *defaults
 #     environment:
