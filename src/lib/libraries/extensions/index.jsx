@@ -152,6 +152,26 @@ export default [
         internetConnectionRequired: true
     },
     {
+        name: (
+            <FormattedMessage
+                defaultMessage="localStorage"
+                description="Name for the localstorage extension"
+                id="gui.extension.localstorage.name"
+            />
+        ),
+        extensionId: 'localstorage',
+        iconURL: translateIconURL,
+        insetIconURL: translateInsetIconURL,
+        description: (
+            <FormattedMessage
+                defaultMessage="localStorage extension"
+                description="Description for the localStorage extension"
+                id="gui.extension.localstorage.description"
+            />
+        ),
+        featured: true
+    },
+    {
         name: 'Makey Makey',
         extensionId: 'makeymakey',
         collaborator: 'JoyLabz',
