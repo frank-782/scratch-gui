@@ -20,6 +20,7 @@ class LanguageSelector extends React.Component {
         if (this.props.messagesByLocale[newLocale]) {
             this.props.onChangeLanguage(newLocale);
             document.documentElement.lang = newLocale;
+            if (window.localStorage) window.localStorage.setItem('locale', newLocale);
         }
     }
     render () {

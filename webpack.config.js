@@ -24,7 +24,7 @@ const base = {
     },
     output: {
         library: 'GUI',
-        filename: '[name].js',
+        filename: '[name].[chunkhash:5].min.js',
         chunkFilename: 'chunks/[name].js'
     },
     externals: {
@@ -99,10 +99,8 @@ module.exports = [
     // to run editor examples
     defaultsDeep({}, base, {
         entry: {
-            'lib.min': ['react', 'react-dom'],
-            'gui': './src/playground/index.jsx',
-            'blocksonly': './src/playground/blocks-only.jsx',
-            'compatibilitytesting': './src/playground/compatibility-testing.jsx',
+            'scratch': ['react', 'react-dom'],
+            'gui.min': './src/playground/index.jsx',
             'player': './src/playground/player.jsx'
         },
         output: {
@@ -120,7 +118,8 @@ module.exports = [
                     test: /\.(svg|png|wav|gif|jpg)$/,
                     loader: 'file-loader',
                     options: {
-                        outputPath: 'static/assets/'
+                        outputPath: 'static/assets/',
+                        publicPath: '/static/gui/assets'
                     }
                 }
             ])
@@ -128,10 +127,10 @@ module.exports = [
         optimization: {
             splitChunks: {
                 chunks: 'all',
-                name: 'lib.min'
+                name: 'scratch'
             },
             runtimeChunk: {
-                name: 'lib.min'
+                name: 'scratch'
             }
         },
         plugins: base.plugins.concat([
@@ -141,25 +140,13 @@ module.exports = [
                 'process.env.GA_ID': '"' + (process.env.GA_ID || 'UA-000000-01') + '"'
             }),
             new HtmlWebpackPlugin({
-                chunks: ['lib.min', 'gui'],
+                chunks: ['scratch', 'gui'],
                 template: 'src/playground/index.ejs',
                 title: 'Scratch 3.0 GUI',
                 sentryConfig: process.env.SENTRY_CONFIG ? '"' + process.env.SENTRY_CONFIG + '"' : null
             }),
             new HtmlWebpackPlugin({
-                chunks: ['lib.min', 'blocksonly'],
-                template: 'src/playground/index.ejs',
-                filename: 'blocks-only.html',
-                title: 'Scratch 3.0 GUI: Blocks Only Example'
-            }),
-            new HtmlWebpackPlugin({
-                chunks: ['lib.min', 'compatibilitytesting'],
-                template: 'src/playground/index.ejs',
-                filename: 'compatibility-testing.html',
-                title: 'Scratch 3.0 GUI: Compatibility Testing'
-            }),
-            new HtmlWebpackPlugin({
-                chunks: ['lib.min', 'player'],
+                chunks: ['scratch', 'player'],
                 template: 'src/playground/index.ejs',
                 filename: 'player.html',
                 title: 'Scratch 3.0 GUI: Player Example'

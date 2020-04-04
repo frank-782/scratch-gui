@@ -113,6 +113,7 @@ const cloudManagerHOC = function (WrappedComponent) {
             return (
                 <WrappedComponent
                     canUseCloud={this.canUseCloud(this.props)}
+                    username={username}
                     vm={vm}
                     {...componentProps}
                 />

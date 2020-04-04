@@ -8,7 +8,17 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
     <script src='https://cdn.jsdelivr.net/npm/react@16.9.0/umd/react.development.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/react-dom@16.9.0/umd/react-dom.development.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/axios@0.19.2/dist/axios.min.js'></script>
     <script src='./scratch-vm.min.js'></script>
+    <script>
+      window.scratchExt = {
+        axios: axios,
+        loading: {
+          start: () => {},
+          end: () =>{}
+        }
+      }
+    </script>
     <% if (htmlWebpackPlugin.options.sentryConfig) { %>
         <!-- Sentry error logging to help with finding bugs -->
         <script src="https://cdn.ravenjs.com/3.22.1/raven.min.js" crossorigin="anonymous"></script>
@@ -19,5 +29,24 @@
     <% } %>
   </head>
   <body>
+
   </body>
+  <script>
+    const appTarget = document.querySelector('div')
+    document.body.appendChild(appTarget);
+    ReactDOM.render(
+      React.createElement(WrappedGui,{
+        canEditTitle: true,
+        backpackVisible: true,
+        showComingSoon: true,
+        canSave: true,
+        canRemix: true,
+        canCreateCopy: true,
+        username: 'scratch-cat',
+        thumbnailUrl: 'static/assets/52797b48d511ecdd8e938684cee7638e.png',
+      }),
+      appTarget
+    );
+
+  </script>
 </html>

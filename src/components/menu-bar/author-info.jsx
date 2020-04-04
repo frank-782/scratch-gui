@@ -35,7 +35,10 @@ const AuthorInfo = ({
                         description="Shows that a project was created by this user"
                         id="gui.authorInfo.byUser"
                         values={{
-                            username: <span className={styles.username}>{username}</span>
+                            username: <a
+                                className={styles.username}
+                                href={`/user/${userId}`}
+                            >{username}</a>
                         }}
                     />
                 </span>

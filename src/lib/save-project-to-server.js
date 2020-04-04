@@ -1,6 +1,7 @@
 import queryString from 'query-string';
-import xhr from 'xhr';
+// eslint-disable-next-line no-unused-vars
 import storage from '../lib/storage';
+import log from './log';
 
 /**
  * Save a project JSON to the project server.
@@ -16,48 +17,52 @@ import storage from '../lib/storage';
  */
 export default function (projectId, vmState, params) {
     const opts = {
-        body: vmState,
+        data: vmState,
         // If we set json:true then the body is double-stringified, so don't
         headers: {
             'Content-Type': 'application/json'
         },
+        validateStatus: () => true,
         withCredentials: true
     };
-    const creatingProject = projectId === null || typeof projectId === 'undefined';
     const queryParams = {};
-    if (params.hasOwnProperty('originalId')) queryParams.original_id = params.originalId;
-    if (params.hasOwnProperty('isCopy')) queryParams.is_copy = params.isCopy;
-    if (params.hasOwnProperty('isRemix')) queryParams.is_remix = params.isRemix;
+    if (params.hasOwnProperty('isCopy')) queryParams.isCopy = true;
+    if (params.hasOwnProperty('isRemix')) queryParams.isRemix = true;
     if (params.hasOwnProperty('title')) queryParams.title = params.title;
     let qs = queryString.stringify(queryParams);
+    log.debug(params);
     if (qs) qs = `?${qs}`;
-    if (creatingProject) {
-        Object.assign(opts, {
-            method: 'post',
-            url: `${storage.projectHost}/${qs}`
-        });
-    } else {
-        Object.assign(opts, {
-            method: 'put',
-            url: `${storage.projectHost}/${projectId}${qs}`
-        });
-    }
+    Object.assign(opts, {
+        method: 'put',
+        // url: `${storage.projectHost}/${projectId}${qs}`
+        url: `${location.origin}/project/${projectId || params.originalId}/upload${qs}`
+    });
+    const loading = window.scratchExt.loading || {};
+    const axios = window.scratchExt.axios || {};
+    loading.start();
     return new Promise((resolve, reject) => {
-        xhr(opts, (err, response) => {
-            if (err) return reject(err);
-            if (response.statusCode !== 200) return reject(response.statusCode);
-            let body;
-            try {
+        axios(opts)
+            .then(response => {
+                log.debug(response);
+                if (response.status !== 200){
+                    loading.end();
+                    return reject(response.status);
+                }
+                let body;
+                try {
                 // Since we didn't set json: true, we have to parse manually
-                body = JSON.parse(response.body);
-            } catch (e) {
-                return reject(e);
-            }
-            body.id = projectId;
-            if (creatingProject) {
-                body.id = body['content-name'];
-            }
-            resolve(body);
-        });
+                    body = response.data;
+                } catch (e) {
+                    loading.end();
+                    return reject(e);
+                }
+                body.id = projectId;
+                loading.end();
+                resolve(body);
+            })
+            .catch(error => {
+                loading.end();
+                reject(error);
+            });
     });
 }

@@ -246,17 +246,14 @@ const getTokenAndUsername = state => {
     // Look for the session state provided by scratch-www
     if (state.session && state.session.session && state.session.session.user) {
         return {
-            token: state.session.session.user.token,
-            username: state.session.session.user.username
+            token: state.session.session.user.token
         };
     }
     // Otherwise try to pull testing params out of the URL, or return nulls
     // TODO a hack for testing the backpack
     const tokenMatches = window.location.href.match(/[?&]token=([^&]*)&?/);
-    const usernameMatches = window.location.href.match(/[?&]username=([^&]*)&?/);
     return {
-        token: tokenMatches ? tokenMatches[1] : null,
-        username: usernameMatches ? usernameMatches[1] : null
+        token: tokenMatches ? tokenMatches[1] : null
     };
 };
 
@@ -266,7 +263,6 @@ const mapStateToProps = state => Object.assign(
         vm: state.scratchGui.vm,
         blockDrag: state.scratchGui.blockDrag
     },
-    getTokenAndUsername(state)
 );
 
 const mapDispatchToProps = () => ({});

@@ -115,6 +115,8 @@ const GUIComponent = props => {
         telemetryModalVisible,
         tipsLibraryVisible,
         vm,
+        username,
+        thumbnailUrl,
         ...componentProps
     } = omit(props, 'dispatch');
     if (children) {
@@ -202,6 +204,7 @@ const GUIComponent = props => {
                 <MenuBar
                     accountNavOpen={accountNavOpen}
                     authorId={authorId}
+                    thumbnailUrl={thumbnailUrl}
                     authorThumbnailUrl={authorThumbnailUrl}
                     authorUsername={authorUsername}
                     canChangeLanguage={canChangeLanguage}
@@ -227,6 +230,7 @@ const GUIComponent = props => {
                     onSeeCommunity={onSeeCommunity}
                     onShare={onShare}
                     onToggleLoginOpen={onToggleLoginOpen}
+                    username={username}
                 />
                 <Box className={styles.bodyWrapper}>
                     <Box className={styles.flexWrapper}>
@@ -295,7 +299,7 @@ const GUIComponent = props => {
                                             grow={1}
                                             isVisible={blocksTabVisible}
                                             options={{
-                                                media: `${basePath}static/blocks-media/`
+                                                media: `${basePath}/blocks-media/`
                                             }}
                                             stageSize={stageSize}
                                             vm={vm}
@@ -411,12 +415,14 @@ GUIComponent.propTypes = {
     targetIsStage: PropTypes.bool,
     telemetryModalVisible: PropTypes.bool,
     tipsLibraryVisible: PropTypes.bool,
-    vm: PropTypes.instanceOf(VM).isRequired
+    vm: PropTypes.instanceOf(VM).isRequired,
+    username: PropTypes.string,
+    thumbnailUrl: PropTypes.string
 };
 GUIComponent.defaultProps = {
     backpackHost: null,
     backpackVisible: false,
-    basePath: './',
+    basePath: './static',
     canChangeLanguage: true,
     canCreateNew: false,
     canEditTitle: false,
@@ -426,11 +432,12 @@ GUIComponent.defaultProps = {
     canCreateCopy: false,
     canShare: false,
     canUseCloud: false,
-    enableCommunity: false,
+    enableCommunity: true,
     isCreating: false,
     isShared: false,
     loading: false,
     showComingSoon: false,
+    username: null,
     stageSizeMode: STAGE_SIZE_MODES.large
 };
 

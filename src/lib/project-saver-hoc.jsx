@@ -186,8 +186,8 @@ const ProjectSaverHOC = function (WrappedComponent) {
                 title: this.props.reduxProjectTitle
             })
                 .then(response => {
-                    this.props.onCreatedProject(response.id.toString(), this.props.loadingState);
                     this.props.onShowCopySuccessAlert();
+                    window.location.href = `/project/${response.id}/editor/`;
                 })
                 .catch(err => {
                     this.props.onShowAlert('creatingError');
@@ -202,8 +202,8 @@ const ProjectSaverHOC = function (WrappedComponent) {
                 title: this.props.reduxProjectTitle
             })
                 .then(response => {
-                    this.props.onCreatedProject(response.id.toString(), this.props.loadingState);
                     this.props.onShowRemixSuccessAlert();
+                    window.location.href = `/project/${response.id}/editor/`;
                 })
                 .catch(err => {
                     this.props.onShowAlert('creatingError');

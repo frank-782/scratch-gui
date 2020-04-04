@@ -38,7 +38,15 @@ const HashParserHOC = function (WrappedComponent) {
         }
         handleHashChange () {
             const hashMatch = window.location.hash.match(/#(\d+)/);
-            const hashProjectId = hashMatch === null ? defaultProjectId : hashMatch[1];
+            let hashProjectId = hashMatch === null ? defaultProjectId : hashMatch[1];
+            if (hashProjectId === defaultProjectId){
+                const paramMatch = window.location.href.match(/\?id=(\d+)/);
+                hashProjectId = paramMatch === null ? defaultProjectId : paramMatch[1];
+            }
+            if (hashProjectId === defaultProjectId){
+                const paramMatch = window.location.href.match(/\/project\/(\d+)/i);
+                hashProjectId = paramMatch === null ? defaultProjectId : paramMatch[1];
+            }
             this.props.setProjectId(hashProjectId.toString());
         }
         render () {

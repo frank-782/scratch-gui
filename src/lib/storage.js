@@ -36,7 +36,7 @@ class Storage extends ScratchStorage {
         this.projectHost = projectHost;
     }
     getProjectGetConfig (projectAsset) {
-        return `${this.projectHost}/${projectAsset.assetId}`;
+        return `${location.origin}/project/${projectAsset.assetId}/download`;
     }
     getProjectCreateConfig () {
         return {
@@ -46,7 +46,7 @@ class Storage extends ScratchStorage {
     }
     getProjectUpdateConfig (projectAsset) {
         return {
-            url: `${this.projectHost}/${projectAsset.assetId}`,
+            url: `${this.projectHost}/project${projectAsset.assetId}/upload`,
             withCredentials: true
         };
     }
@@ -54,7 +54,9 @@ class Storage extends ScratchStorage {
         this.assetHost = assetHost;
     }
     getAssetGetConfig (asset) {
-        return `${this.assetHost}/internalapi/asset/${asset.assetId}.${asset.dataFormat}/get/`;
+
+        // return `${this.assetHost}/internalapi/asset/${asset.assetId}.${asset.dataFormat}/get/`;
+        return `${location.origin}/asset/${asset.assetId}.${asset.dataFormat}`;
     }
     getAssetCreateConfig (asset) {
         return {
@@ -63,7 +65,8 @@ class Storage extends ScratchStorage {
             // assetId as part of the create URI. So, force the method to POST.
             // Then when storage finds this config to use for the "update", still POSTs
             method: 'post',
-            url: `${this.assetHost}/${asset.assetId}.${asset.dataFormat}`,
+            // url: `${this.assetHost}/${asset.assetId}.${asset.dataFormat}`,
+            url: `${location.origin}/asset/upload?name=${asset.assetId}.${asset.dataFormat}`,
             withCredentials: true
         };
     }

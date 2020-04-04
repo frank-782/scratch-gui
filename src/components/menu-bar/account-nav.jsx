@@ -28,7 +28,6 @@ const AccountNavComponent = ({
     onClick,
     onClose,
     onLogOut,
-    profileUrl,
     thumbnailUrl,
     username
 }) => (
@@ -64,18 +63,18 @@ const AccountNavComponent = ({
             place={isRtl ? 'right' : 'left'}
             onRequestClose={onClose}
         >
-            <MenuItemContainer href={profileUrl}>
+            <MenuItemContainer href={'/user/my'}>
                 <FormattedMessage
-                    defaultMessage="Profile"
+                    defaultMessage="我的个人主页"
                     description="Text to link to my user profile, in the account navigation menu"
-                    id="gui.accountMenu.profile"
+                    id="gui.accountMenu.myHome"
                 />
             </MenuItemContainer>
-            <MenuItemContainer href="/mystuff/">
+            <MenuItemContainer href="/user/project">
                 <FormattedMessage
-                    defaultMessage="My Stuff"
+                    defaultMessage="我的项目"
                     description="Text to link to list of my projects, in the account navigation menu"
-                    id="gui.accountMenu.myStuff"
+                    id="gui.accountMenu.myProject"
                 />
             </MenuItemContainer>
             {isEducator ? (
@@ -96,19 +95,19 @@ const AccountNavComponent = ({
                     />
                 </MenuItemContainer>
             ) : null}
-            <MenuItemContainer href="/accounts/settings/">
+            <MenuItemContainer href="/user/settings">
                 <FormattedMessage
-                    defaultMessage="Account settings"
+                    defaultMessage="账户设置"
                     description="Text to link to my account settings, in the account navigation menu"
-                    id="gui.accountMenu.accountSettings"
+                    id="gui.accountMenu.userSettings"
                 />
             </MenuItemContainer>
             <MenuSection>
                 <MenuItemContainer onClick={onLogOut}>
                     <FormattedMessage
-                        defaultMessage="Sign out"
+                        defaultMessage="退出登录"
                         description="Text to link to sign out, in the account navigation menu"
-                        id="gui.accountMenu.signOut"
+                        id="gui.accountMenu.LogOut"
                     />
                 </MenuItemContainer>
             </MenuSection>

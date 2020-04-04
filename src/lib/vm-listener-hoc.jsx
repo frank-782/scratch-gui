@@ -176,9 +176,7 @@ const vmListenerHOC = function (WrappedComponent) {
             !state.scratchGui.modals.soundRecorder,
         // Do not update the projectChanged state in fullscreen or player only mode
         shouldUpdateProjectChanged: !state.scratchGui.mode.isFullScreen && !state.scratchGui.mode.isPlayerOnly,
-        vm: state.scratchGui.vm,
-        username: state.session && state.session.session && state.session.session.user ?
-            state.session.session.user.username : ''
+        vm: state.scratchGui.vm
     });
     const mapDispatchToProps = dispatch => ({
         onTargetsUpdate: data => {
