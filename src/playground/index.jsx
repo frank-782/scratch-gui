@@ -21,10 +21,6 @@ import {compose} from 'redux';
 // Register "base" page view
 analytics.pageview('/');
 
-const appTarget = document.createElement('div');
-appTarget.className = styles.app;
-document.body.appendChild(appTarget);
-
 
 if (supportedBrowser()) {
     const WrappedGui = compose(
@@ -34,6 +30,9 @@ if (supportedBrowser()) {
     )(GUI);
     window.WrappedGui = WrappedGui;
 } else {
+    const appTarget = document.createElement('div');
+    appTarget.className = styles.app;
+    document.body.appendChild(appTarget);
     BrowserModalComponent.setAppElement(appTarget);
     const WrappedBrowserModalComponent = AppStateHOC(BrowserModalComponent, true /* localesOnly */);
     const handleBack = () => {};
