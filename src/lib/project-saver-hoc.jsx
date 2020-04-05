@@ -138,7 +138,9 @@ const ProjectSaverHOC = function (WrappedComponent) {
             }
         }
         scheduleAutoSave () {
-            if (this.props.isShowingSaveable && this.props.autoSaveTimeoutId === null) {
+            if (this.props.isShowingSaveable &&
+                this.props.autoSaveTimeoutId === null &&
+                this.props.autoSaveIntervalSecs) {
                 const timeoutId = setTimeout(this.tryToAutoSave,
                     this.props.autoSaveIntervalSecs * 1000);
                 this.props.setAutoSaveTimeoutId(timeoutId);

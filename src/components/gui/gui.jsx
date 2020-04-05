@@ -117,6 +117,7 @@ const GUIComponent = props => {
         vm,
         username,
         thumbnailUrl,
+        autoSaveIntervalSecs,
         ...componentProps
     } = omit(props, 'dispatch');
     if (children) {
@@ -231,6 +232,7 @@ const GUIComponent = props => {
                     onShare={onShare}
                     onToggleLoginOpen={onToggleLoginOpen}
                     username={username}
+                    autoSaveIntervalSecs={autoSaveIntervalSecs}
                 />
                 <Box className={styles.bodyWrapper}>
                     <Box className={styles.flexWrapper}>
@@ -417,7 +419,8 @@ GUIComponent.propTypes = {
     tipsLibraryVisible: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired,
     username: PropTypes.string,
-    thumbnailUrl: PropTypes.string
+    thumbnailUrl: PropTypes.string,
+    autoSaveIntervalSecs: PropTypes.number
 };
 GUIComponent.defaultProps = {
     backpackHost: null,

@@ -189,7 +189,7 @@ class MenuBar extends React.Component {
         this.props.onRequestCloseFile();
     }
     handleClickSeeCommunity (waitForUpdate) {
-        if (this.props.shouldSaveBeforeTransition()) {
+        if (this.props.shouldSaveBeforeTransition() && this.props.autoSaveIntervalSecs) {
             this.props.autoUpdateProject(); // save before transitioning to project page
             waitForUpdate(true); // queue the transition to project page
         } else {
@@ -668,6 +668,7 @@ MenuBar.propTypes = {
     showComingSoon: PropTypes.bool,
     userOwnsProject: PropTypes.bool,
     username: PropTypes.string,
+    autoSaveIntervalSecs: PropTypes.number,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 

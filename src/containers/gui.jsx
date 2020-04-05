@@ -74,6 +74,7 @@ class GUI extends React.Component {
             onVmInit,
             projectHost,
             projectId,
+            autoSaveIntervalSecs,
             /* eslint-enable no-unused-vars */
             children,
             fetchingProject,
@@ -113,6 +114,7 @@ GUI.propTypes = {
     projectHost: PropTypes.string,
     projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     telemetryModalVisible: PropTypes.bool,
+    autoSaveIntervalSecs: PropTypes.number,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
