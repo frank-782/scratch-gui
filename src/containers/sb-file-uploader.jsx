@@ -130,7 +130,7 @@ class SBFileUploader extends React.Component {
                     this.props.onLoadingFinished(this.props.loadingState, true);
                     // Reset the file input after project is loaded
                     // This is necessary in case the user wants to reload a project
-                    if (filename) {
+                    if (filename && this.props.canSave) {
                         const uploadedProjectTitle = this.getProjectTitleFromFilename(filename);
                         this.props.onReceivedProjectTitle(uploadedProjectTitle);
                     }
