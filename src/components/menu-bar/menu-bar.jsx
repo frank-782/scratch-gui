@@ -553,7 +553,7 @@ class MenuBar extends React.Component {
                     {this.props.username ? (
                     // ************ user is logged in ************
                         <React.Fragment>
-                            <a href="/user/my?tab=project">
+                            <a href="/user/project">
                                 <div
                                     className={classNames(
                                         styles.menuBarItem,

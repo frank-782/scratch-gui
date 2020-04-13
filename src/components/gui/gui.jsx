@@ -118,6 +118,7 @@ const GUIComponent = props => {
         username,
         thumbnailUrl,
         autoSaveIntervalSecs,
+        scratch2Style,
         ...componentProps
     } = omit(props, 'dispatch');
     if (children) {
@@ -236,6 +237,23 @@ const GUIComponent = props => {
                 />
                 <Box className={styles.bodyWrapper}>
                     <Box className={styles.flexWrapper}>
+                        {scratch2Style ? (
+                            <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
+                                <StageWrapper
+                                    isRendererSupported={isRendererSupported}
+                                    isRtl={isRtl}
+                                    stageSize={stageSize}
+                                    vm={vm}
+                                />
+                                <Box className={styles.targetWrapper}>
+                                    <TargetPane
+                                        stageSize={stageSize}
+                                        vm={vm}
+                                        scratch2Style={scratch2Style}
+                                    />
+                                </Box>
+                            </Box>
+                        ) : null}
                         <Box className={styles.editorWrapper}>
                             <Tabs
                                 forceRenderTabPanel
@@ -335,21 +353,23 @@ const GUIComponent = props => {
                                 <Backpack host={backpackHost} />
                             ) : null}
                         </Box>
-
-                        <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
-                            <StageWrapper
-                                isRendererSupported={isRendererSupported}
-                                isRtl={isRtl}
-                                stageSize={stageSize}
-                                vm={vm}
-                            />
-                            <Box className={styles.targetWrapper}>
-                                <TargetPane
+                        {scratch2Style ? null : (
+                            <Box className={classNames(styles.stageAndTargetWrapper, styles[stageSize])}>
+                                <StageWrapper
+                                    isRendererSupported={isRendererSupported}
+                                    isRtl={isRtl}
                                     stageSize={stageSize}
                                     vm={vm}
                                 />
+                                <Box className={styles.targetWrapper}>
+                                    <TargetPane
+                                        stageSize={stageSize}
+                                        vm={vm}
+                                        scratch2Style={scratch2Style}
+                                    />
+                                </Box>
                             </Box>
-                        </Box>
+                        )}
                     </Box>
                 </Box>
                 <DragLayer />
@@ -423,6 +443,7 @@ GUIComponent.propTypes = {
     autoSaveIntervalSecs: PropTypes.number
 };
 GUIComponent.defaultProps = {
+    autoSaveIntervalSecs: 120,
     backpackHost: null,
     backpackVisible: false,
     basePath: './static',

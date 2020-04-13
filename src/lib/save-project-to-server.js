@@ -28,7 +28,6 @@ export default function (projectId, vmState, params) {
     const queryParams = {};
     if (params.hasOwnProperty('isCopy')) queryParams.isCopy = true;
     if (params.hasOwnProperty('isRemix')) queryParams.isRemix = true;
-    if (params.hasOwnProperty('title')) queryParams.title = params.title;
     let qs = queryString.stringify(queryParams);
     log.debug(params);
     if (qs) qs = `?${qs}`;
@@ -39,6 +38,7 @@ export default function (projectId, vmState, params) {
     });
     const loading = window.scratchExt.loading || {};
     const axios = window.scratchExt.axios || {};
+    const showWarn = window.scratchExt.alert.warn || {};
     loading.start();
     return new Promise((resolve, reject) => {
         axios(opts)
@@ -46,6 +46,8 @@ export default function (projectId, vmState, params) {
                 log.debug(response);
                 if (response.status !== 200){
                     loading.end();
+                    const data = response.data;
+                    if (data.message) showWarn(data.message);
                     return reject(response.status);
                 }
                 let body;
@@ -56,7 +58,6 @@ export default function (projectId, vmState, params) {
                     loading.end();
                     return reject(e);
                 }
-                body.id = projectId;
                 loading.end();
                 resolve(body);
             })

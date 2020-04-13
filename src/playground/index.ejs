@@ -19,6 +19,24 @@
         }
       }
     </script>
+    <style>
+      html,
+      body,
+      .app {
+          /* probably unecessary, transitional until layout is refactored */
+          width: 100%; 
+          height: 100%;
+          margin: 0;
+
+          /* Setting min height/width makes the UI scroll below those sizes */
+          min-width: 1024px;
+          min-height: 640px; /* Min height to fit sprite/backdrop button */
+      }
+
+      /* @todo: move globally? Safe / side FX, for blocks particularly? */
+      * { box-sizing: border-box; }
+
+    </style>
     <% if (htmlWebpackPlugin.options.sentryConfig) { %>
         <!-- Sentry error logging to help with finding bugs -->
         <script src="https://cdn.ravenjs.com/3.22.1/raven.min.js" crossorigin="anonymous"></script>
@@ -32,18 +50,21 @@
 
   </body>
   <script>
-    const appTarget = document.querySelector('div')
+    const appTarget = document.createElement('div');
+    appTarget.className = 'app';
     document.body.appendChild(appTarget);
     ReactDOM.render(
       React.createElement(WrappedGui,{
+        autoSaveIntervalSecs: 0,
         canEditTitle: true,
         backpackVisible: true,
         showComingSoon: true,
         canSave: true,
         canRemix: true,
+        canShare: true,
         canCreateCopy: true,
         username: 'scratch-cat',
-        thumbnailUrl: 'static/assets/52797b48d511ecdd8e938684cee7638e.png',
+        thumbnailUrl: 'https://llk.github.io/scratch-gui/develop/static/assets/52797b48d511ecdd8e938684cee7638e.png',
       }),
       appTarget
     );

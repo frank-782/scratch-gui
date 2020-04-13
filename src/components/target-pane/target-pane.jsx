@@ -45,12 +45,36 @@ const TargetPane = ({
     stageSize,
     sprites,
     vm,
+    scratch2Style,
     ...componentProps
 }) => (
     <div
         className={styles.targetPane}
         {...componentProps}
     >
+        {scratch2Style ? (
+            <div className={styles.stageSelectorWrapperScratch2}>
+                {stage.id && <StageSelector
+                    asset={
+                        stage.costume &&
+                    stage.costume.asset
+                    }
+                    backdropCount={stage.costumeCount}
+                    id={stage.id}
+                    selected={stage.id === editingTarget}
+                    onSelect={onSelectSprite}
+                />}
+                <div>
+                    {spriteLibraryVisible ? (
+                        <SpriteLibrary
+                            vm={vm}
+                            onActivateBlocksTab={onActivateBlocksTab}
+                            onRequestClose={onRequestCloseSpriteLibrary}
+                        />
+                    ) : null}
+                </div>
+            </div>
+        ) : null}
 
         <SpriteSelectorComponent
             editingTarget={editingTarget}
@@ -77,28 +101,32 @@ const TargetPane = ({
             onSelectSprite={onSelectSprite}
             onSpriteUpload={onSpriteUpload}
             onSurpriseSpriteClick={onSurpriseSpriteClick}
+            scratch2Style={scratch2Style}
         />
-        <div className={styles.stageSelectorWrapper}>
-            {stage.id && <StageSelector
-                asset={
-                    stage.costume &&
-                    stage.costume.asset
-                }
-                backdropCount={stage.costumeCount}
-                id={stage.id}
-                selected={stage.id === editingTarget}
-                onSelect={onSelectSprite}
-            />}
-            <div>
-                {spriteLibraryVisible ? (
-                    <SpriteLibrary
-                        vm={vm}
-                        onActivateBlocksTab={onActivateBlocksTab}
-                        onRequestClose={onRequestCloseSpriteLibrary}
-                    />
-                ) : null}
+        {scratch2Style ? null : (
+            <div className={styles.stageSelectorWrapper}>
+                {stage.id && <StageSelector
+                    asset={
+                        stage.costume &&
+                stage.costume.asset
+                    }
+                    backdropCount={stage.costumeCount}
+                    id={stage.id}
+                    selected={stage.id === editingTarget}
+                    onSelect={onSelectSprite}
+                />}
+                <div>
+                    {spriteLibraryVisible ? (
+                        <SpriteLibrary
+                            vm={vm}
+                            onActivateBlocksTab={onActivateBlocksTab}
+                            onRequestClose={onRequestCloseSpriteLibrary}
+                        />
+                    ) : null}
+                </div>
             </div>
-        </div>
+        )}
+        
     </div>
 );
 
@@ -154,6 +182,7 @@ TargetPane.propTypes = {
     spriteLibraryVisible: PropTypes.bool,
     sprites: PropTypes.objectOf(spriteShape),
     stage: spriteShape,
+    scratch2Style: PropTypes.bool,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
     vm: PropTypes.instanceOf(VM)
 };

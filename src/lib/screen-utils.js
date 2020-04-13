@@ -49,6 +49,7 @@ const getStageDimensions = (stageSize, isFullScreen) => {
         width: 0,
         scale: 0
     };
+    const GUIWapper = document.getElementById('GUIWapper');
 
     if (isFullScreen) {
         stageDimensions.height = window.innerHeight -
@@ -66,7 +67,11 @@ const getStageDimensions = (stageSize, isFullScreen) => {
     } else {
         stageDimensions.scale = STAGE_DISPLAY_SCALES[stageSize];
         stageDimensions.height = stageDimensions.scale * stageDimensions.heightDefault;
-        stageDimensions.width = stageDimensions.scale * stageDimensions.widthDefault;
+        // stageDimensions.width = stageDimensions.scale * stageDimensions.widthDefault;
+        stageDimensions.width = GUIWapper ?
+            GUIWapper.offsetWidth :
+            stageDimensions.scale * stageDimensions.widthDefault;
+        stageDimensions.height = stageDimensions.width * .75;
     }
 
     // Round off dimensions to prevent resampling/blurriness

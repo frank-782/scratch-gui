@@ -10,6 +10,7 @@ import {STAGE_DISPLAY_SIZES} from '../../lib/layout-constants';
 import {isRtl} from 'scratch-l10n';
 
 import styles from './sprite-selector.css';
+import classNames from 'classnames';
 
 import fileUploadIcon from '../action-menu/icon--file-upload.svg';
 import paintIcon from '../action-menu/icon--paint.svg';
@@ -67,6 +68,7 @@ const SpriteSelectorComponent = function (props) {
         spriteFileInput,
         sprites,
         stageSize,
+        scratch2Style,
         ...componentProps
     } = props;
     let selectedSprite = sprites[selectedId];
@@ -77,7 +79,9 @@ const SpriteSelectorComponent = function (props) {
     }
     return (
         <Box
-            className={styles.spriteSelector}
+            className={classNames(scratch2Style ?
+                styles.spriteSelectorScratch2 :
+                styles.spriteSelector)}
             {...componentProps}
         >
 

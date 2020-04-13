@@ -13,6 +13,13 @@
     flex-shrink: 0;
 }
 
+.stage-selector-wrapper-scratch2 {
+    display: flex;
+    flex-basis: 72px;
+    flex-shrink: 0;
+    margin-right: calc($space / 2);
+}
+
 [dir="ltr"] .stage-selector-wrapper {
     margin-left: calc($space / 2);
 }

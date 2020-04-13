@@ -189,7 +189,10 @@ const ProjectSaverHOC = function (WrappedComponent) {
             })
                 .then(response => {
                     this.props.onShowCopySuccessAlert();
-                    window.location.href = `/project/${response.id}/editor/`;
+                    // 等待1秒，以让Alert能显示出来
+                    setTimeout(() => {
+                        window.location.href = `/project/${response.id}/editor/`;
+                    }, 1000);
                 })
                 .catch(err => {
                     this.props.onShowAlert('creatingError');
@@ -205,7 +208,10 @@ const ProjectSaverHOC = function (WrappedComponent) {
             })
                 .then(response => {
                     this.props.onShowRemixSuccessAlert();
-                    window.location.href = `/project/${response.id}/editor/`;
+                    setTimeout(() => {
+                        window.location.href = `/project/${response.id}/editor/`;
+                    }, 1000);
+                    
                 })
                 .catch(err => {
                     this.props.onShowAlert('creatingError');

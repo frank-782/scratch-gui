@@ -14,6 +14,8 @@ const minVersions = {
 const supportedBrowser = () => {
     if (bowser.msie) {
         return false;
+    } else if (bowser.seamonkey) {
+        return false;
     }
     return true;
 };

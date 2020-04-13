@@ -13,6 +13,7 @@ var postcssVars = require('postcss-simple-vars');
 var postcssImport = require('postcss-import');
 
 const STATIC_PATH = process.env.STATIC_PATH || '/static';
+const PUBLIC_PATH = '/static/gui/assets';
 
 const base = {
     mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
@@ -119,7 +120,7 @@ module.exports = [
                     loader: 'file-loader',
                     options: {
                         outputPath: 'static/assets/',
-                        publicPath: '/static/gui/assets'
+                        publicPath: PUBLIC_PATH
                     }
                 }
             ])
@@ -140,7 +141,7 @@ module.exports = [
                 'process.env.GA_ID': '"' + (process.env.GA_ID || 'UA-000000-01') + '"'
             }),
             new HtmlWebpackPlugin({
-                chunks: ['scratch', 'gui'],
+                chunks: ['scratch', 'gui.min'],
                 template: 'src/playground/index.ejs',
                 title: 'Scratch 3.0 GUI',
                 sentryConfig: process.env.SENTRY_CONFIG ? '"' + process.env.SENTRY_CONFIG + '"' : null
