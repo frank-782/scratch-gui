@@ -38,6 +38,7 @@ const AuthorInfo = ({
                             username: <a
                                 className={styles.username}
                                 href={`/user/${userId}`}
+                                target={'_black'}
                             >{username}</a>
                         }}
                     />

@@ -130,7 +130,7 @@ const alerts = [
             'createRemixSuccess', 'creatingRemix', 'saveSuccess', 'saving'],
         showDownload: true,
         showSaveNow: true,
-        closeButton: false,
+        closeButton: true,
         content: (
             <FormattedMessage
                 defaultMessage="Project could not save."
@@ -212,6 +212,20 @@ const alerts = [
         ),
         iconSpinner: true,
         level: AlertLevels.SUCCESS
+    },
+    {
+        alertId: 'loadError',
+        alertType: AlertTypes.STANDARD,
+        clearList: ['loadError'],
+        content: (
+            <FormattedMessage
+                defaultMessage="The project file that was selected failed to load."
+                description="An error that displays when a local project file fails to load."
+                id="gui.projectLoader.loadError"
+            />
+        ),
+        level: AlertLevels.WARN,
+        closeButton: true
     }
 ];
 

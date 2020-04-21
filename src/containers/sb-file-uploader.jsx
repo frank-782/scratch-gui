@@ -4,6 +4,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 import {setProjectTitle} from '../reducers/project-title';
+import {showAlertWithTimeout} from '../reducers/alerts';
 
 import log from '../lib/log';
 import sharedMessages from '../lib/shared-messages';
@@ -94,10 +95,8 @@ class SBFileUploader extends React.Component {
     handleChange (e) {
         const {
             intl,
-            isShowingWithoutId,
             loadingState,
-            projectChanged,
-            userOwnsProject
+            canSave
         } = this.props;
 
         const thisFileInput = e.target;
@@ -108,7 +107,7 @@ class SBFileUploader extends React.Component {
             // we must confirm with the user that they really intend to replace it.
             // (If they don't own the project and haven't changed it, no need to confirm.)
             let uploadAllowed = true;
-            if (userOwnsProject || (projectChanged && isShowingWithoutId)) {
+            if (canSave) {
                 uploadAllowed = confirm( // eslint-disable-line no-alert
                     intl.formatMessage(sharedMessages.replaceProjectWarning)
                 );
@@ -138,7 +137,8 @@ class SBFileUploader extends React.Component {
                 })
                 .catch(error => {
                     log.warn(error);
-                    alert(this.props.intl.formatMessage(messages.loadError)); // eslint-disable-line no-alert
+                    this.props.showLoadErrorAlert();
+                    // alert(this.props.intl.formatMessage(messages.loadError)); // eslint-disable-line no-alert
                     this.props.onLoadingFinished(this.props.loadingState, false);
                     // Reset the file input after project is loaded
                     // This is necessary in case the user wants to reload a project
@@ -173,17 +173,15 @@ SBFileUploader.propTypes = {
     canSave: PropTypes.bool, // eslint-disable-line react/no-unused-prop-types
     children: PropTypes.func,
     className: PropTypes.string,
+    showLoadErrorAlert: PropTypes.func,
     closeFileMenu: PropTypes.func,
     intl: intlShape.isRequired,
     isLoadingUpload: PropTypes.bool,
-    isShowingWithoutId: PropTypes.bool,
     loadingState: PropTypes.oneOf(LoadingStates),
     onLoadingFinished: PropTypes.func,
     onLoadingStarted: PropTypes.func,
-    projectChanged: PropTypes.bool,
     requestProjectUpload: PropTypes.func,
     onReceivedProjectTitle: PropTypes.func,
-    userOwnsProject: PropTypes.bool,
     vm: PropTypes.shape({
         loadProject: PropTypes.func
     })
@@ -203,6 +201,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+    showLoadErrorAlert: () => showAlertWithTimeout(dispatch, 'loadError'),
     closeFileMenu: () => dispatch(closeFileMenu()),
     onLoadingFinished: (loadingState, success) => {
         dispatch(onLoadedProject(loadingState, ownProps.canSave, success));

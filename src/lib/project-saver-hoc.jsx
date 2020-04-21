@@ -211,7 +211,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
                     setTimeout(() => {
                         window.location.href = `/project/${response.id}/editor/`;
                     }, 1000);
-                    
+
                 })
                 .catch(err => {
                     this.props.onShowAlert('creatingError');
@@ -234,23 +234,29 @@ const ProjectSaverHOC = function (WrappedComponent) {
             // serialized project refers to a newer asset than what
             // we just finished saving).
             const savedVMState = this.props.vm.toJSON();
+            const showWarn = window.scratchExt.alert.warn || {};
             return Promise.all(this.props.vm.assets
                 .filter(asset => !asset.clean)
                 .map(
-                    asset => storage.store(
-                        asset.assetType,
-                        asset.dataFormat,
-                        asset.data,
-                        asset.assetId
-                    ).then(response => {
-                        // Asset servers respond with {status: ok} for successful POSTs
-                        if (response.status !== 'ok') {
-                            // Errors include a `code` property, e.g. "Forbidden"
-                            return Promise.reject(response.code);
+                    asset => {
+                        if (asset.data.length > 10 * 1024 * 1024) {
+                            showWarn('某个素材/音频超过了服务器的上传限制。');
+                            return Promise.reject(`某个素材/音频超过了服务器的上传限制。(AssetId:${asset.assetId}.${asset.dataFormat})`);
                         }
-                        asset.clean = true;
+                        return storage.store(
+                            asset.assetType,
+                            asset.dataFormat,
+                            asset.data,
+                            asset.assetId
+                        ).then(response => {
+                            // Asset servers respond with {status: ok} for successful POSTs
+                            if (response.status !== 'ok') {
+                            // Errors include a `code` property, e.g. "Forbidden"
+                                return Promise.reject(response.code);
+                            }
+                            asset.clean = true;
+                        });
                     })
-                )
             )
                 .then(() => this.props.onUpdateProjectData(projectId, savedVMState, requestParams))
                 .then(response => {
