@@ -250,9 +250,9 @@ const ProjectSaverHOC = function (WrappedComponent) {
                             asset.assetId
                         ).then(response => {
                             // Asset servers respond with {status: ok} for successful POSTs
-                            if (response.status !== 'ok') {
+                            if (!response) {
                             // Errors include a `code` property, e.g. "Forbidden"
-                                return Promise.reject(response.code);
+                                return Promise.reject(response);
                             }
                             asset.clean = true;
                         });
