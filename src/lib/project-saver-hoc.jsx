@@ -189,10 +189,10 @@ const ProjectSaverHOC = function (WrappedComponent) {
             })
                 .then(response => {
                     this.props.onShowCopySuccessAlert();
-                    // 等待1秒，以让Alert能显示出来
+                    // 等待1.5秒，以让Alert能显示出来
                     setTimeout(() => {
                         window.location.href = `/project/${response.id}/editor/`;
-                    }, 1000);
+                    }, 1500);
                 })
                 .catch(err => {
                     this.props.onShowAlert('creatingError');
@@ -210,7 +210,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
                     this.props.onShowRemixSuccessAlert();
                     setTimeout(() => {
                         window.location.href = `/project/${response.id}/editor/`;
-                    }, 1000);
+                    }, 1500);
 
                 })
                 .catch(err => {
@@ -281,7 +281,7 @@ const ProjectSaverHOC = function (WrappedComponent) {
         storeProjectThumbnail (projectId) {
             try {
                 this.getProjectThumbnail(dataURI => {
-                    this.props.onUpdateProjectThumbnail(projectId, dataURItoBlob(dataURI));
+                    this.props.onUpdateProjectThumbnail(projectId, dataURI);
                 });
             } catch (e) {
                 log.error('Project thumbnail save error', e);

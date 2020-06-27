@@ -72,7 +72,13 @@ const ProjectFetcherHOC = function (WrappedComponent) {
                 .load(storage.AssetType.Project, projectId, storage.DataFormat.JSON)
                 .then(projectAsset => {
                     if (projectAsset) {
-                        this.props.onFetchedProjectData(projectAsset.data, loadingState);
+                        try {
+                            const decryptJson = window.scratchExt.decryptJson;
+                            this.props.onFetchedProjectData(decryptJson(projectAsset), loadingState);
+                        } catch {
+                            this.props.onFetchedProjectData(projectAsset.data, loadingState);
+                        }
+
                     } else {
                         // Treat failure to load as an error
                         // Throw to be caught by catch later on

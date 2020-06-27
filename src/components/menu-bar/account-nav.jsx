@@ -41,13 +41,16 @@ const AccountNavComponent = ({
         >
             {thumbnailUrl ? (
                 <UserAvatar
-                    className={styles.avatar}
+                    // className={styles.avatar}
                     imageUrl={thumbnailUrl}
+                    title={username}
                 />
             ) : null}
+            {/*
             <span className={styles.profileName}>
                 {username}
             </span>
+            */}
             <div className={styles.dropdownCaretPosition}>
                 <img
                     className={styles.dropdownCaretIcon}
@@ -65,14 +68,14 @@ const AccountNavComponent = ({
         >
             <MenuItemContainer href={'/user/my'}>
                 <FormattedMessage
-                    defaultMessage="我的个人主页"
+                    defaultMessage="个人主页"
                     description="Text to link to my user profile, in the account navigation menu"
                     id="gui.accountMenu.myHome"
                 />
             </MenuItemContainer>
             <MenuItemContainer href="/user/project">
                 <FormattedMessage
-                    defaultMessage="我的项目"
+                    defaultMessage="我的作品"
                     description="Text to link to list of my projects, in the account navigation menu"
                     id="gui.accountMenu.myProject"
                 />
@@ -99,7 +102,7 @@ const AccountNavComponent = ({
                 <FormattedMessage
                     defaultMessage="账户设置"
                     description="Text to link to my account settings, in the account navigation menu"
-                    id="gui.accountMenu.userSettings"
+                    id="gui.accountMenu.accountSettings"
                 />
             </MenuItemContainer>
             <MenuSection>

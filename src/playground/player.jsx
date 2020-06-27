@@ -1,28 +1,32 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 import {compose} from 'redux';
 
 import Box from '../components/box/box.jsx';
-import GUI from '../containers/gui.jsx';
+import GUI from '../containers/gui-player.jsx';
 import HashParserHOC from '../lib/hash-parser-hoc.jsx';
-import AppStateHOC from '../lib/app-state-hoc.jsx';
+import AppStateHOC from '../lib/app-state-player-hoc.jsx';
 
 import {setPlayer} from '../reducers/mode';
 import styles from './player.css';
 
-const Player = ({isPlayerOnly, projectId}) => (
+const Player = ({isPlayerOnly, projectId, username, assetHost}) => (
     <Box className={styles.stageOnly}>
         <GUI
             isPlayerOnly={isPlayerOnly}
             projectId={projectId}
+            username={username}
+            assetHost={assetHost}
         />
     </Box>
 );
 
 Player.propTypes = {
     isPlayerOnly: PropTypes.bool,
+    username: PropTypes.string,
+    assetHost: PropTypes.string,
     projectId: PropTypes.string
 };
 
@@ -46,5 +50,4 @@ const WrappedPlayer = compose(
     AppStateHOC,
     HashParserHOC
 )(ConnectedPlayer);
-
 window.WrappedPlayer = WrappedPlayer;

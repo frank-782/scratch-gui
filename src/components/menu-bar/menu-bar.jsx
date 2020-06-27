@@ -198,10 +198,7 @@ class MenuBar extends React.Component {
     }
     handleClickShare (waitForUpdate) {
         if (!this.props.isShared) {
-            if (this.props.canShare) { // save before transitioning to project page
-                this.props.onShare();
-            }
-            if (this.props.canSave) { // save before transitioning to project page
+            if (this.props.canSave && this.props.canShare) { // save before transitioning to project page
                 this.props.autoUpdateProject();
                 waitForUpdate(true); // queue the transition to project page
             } else {
@@ -491,7 +488,7 @@ class MenuBar extends React.Component {
                     <div className={classNames(styles.menuBarItem)}>
                         {this.props.canShare ? (
                             (this.props.isShowingProject || this.props.isUpdating) && (
-                                <ProjectWatcher onDoneUpdating={this.props.onSeeCommunity}>
+                                <ProjectWatcher onDoneUpdating={this.props.onShare}>
                                     {
                                         waitForUpdate => (
                                             <ShareButton

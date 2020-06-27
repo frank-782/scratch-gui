@@ -12,7 +12,7 @@ var autoprefixer = require('autoprefixer');
 var postcssVars = require('postcss-simple-vars');
 var postcssImport = require('postcss-import');
 
-const STATIC_PATH = process.env.STATIC_PATH || '/static/assets';
+const STATIC_PATH = process.env.STATIC_PATH || '/static';
 const PUBLIC_PATH = '/static/gui/assets';
 
 const base = {
@@ -25,8 +25,8 @@ const base = {
     },
     output: {
         library: 'GUI',
-        filename: '[name].min.js',
-        chunkFilename: '[name].js'
+        filename: '[name].js'
+        // chunkFilename: 'chunks/[name].js'
     },
     externals: {
         React: 'react',
@@ -102,8 +102,7 @@ module.exports = [
     // to run editor examples
     defaultsDeep({}, base, {
         entry: {
-            'scratch-gui': ['react', 'react-dom'],
-            'gui.min': './src/playground/index.jsx',
+            'scratch-player': ['react', 'react-dom'],
             'player': './src/playground/player.jsx'
         },
         output: {
@@ -130,10 +129,10 @@ module.exports = [
         optimization: {
             splitChunks: {
                 chunks: 'all',
-                name: 'scratch-gui'
+                name: 'scratch-player'
             },
             runtimeChunk: {
-                name: 'scratch-gui'
+                name: 'scratch-player'
             }
         },
         plugins: base.plugins.concat([
@@ -149,7 +148,7 @@ module.exports = [
                 sentryConfig: process.env.SENTRY_CONFIG ? '"' + process.env.SENTRY_CONFIG + '"' : null
             }),
             new HtmlWebpackPlugin({
-                chunks: ['scratch-gui', 'player'],
+                chunks: ['scratch-player', 'player'],
                 template: 'src/playground/index.ejs',
                 filename: 'player.html',
                 title: 'Scratch 3.0 GUI: Player Example'

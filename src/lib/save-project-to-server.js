@@ -39,7 +39,7 @@ export default function (projectId, vmState, params) {
     const loading = window.scratchExt.loading || {};
     const axios = window.scratchExt.axios || {};
     const showWarn = window.scratchExt.alert.warn || {};
-    loading.start();
+    loading.start(true);
     return new Promise((resolve, reject) => {
         axios(opts)
             .then(response => {
@@ -50,14 +50,7 @@ export default function (projectId, vmState, params) {
                     if (data.message) showWarn(data.message);
                     return reject(response.status);
                 }
-                let body;
-                try {
-                // Since we didn't set json: true, we have to parse manually
-                    body = response.data;
-                } catch (e) {
-                    loading.end();
-                    return reject(e);
-                }
+                const body = response.data;
                 loading.end();
                 resolve(body);
             })

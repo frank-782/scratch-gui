@@ -6,20 +6,23 @@ import styles from './user-avatar.css';
 
 const UserAvatar = ({
     className,
-    imageUrl
+    imageUrl,
+    title
 }) => (
     <img
         className={classNames(
             className,
             styles.userThumbnail
         )}
+        title={title}
         src={imageUrl}
     />
 );
 
 UserAvatar.propTypes = {
     className: PropTypes.string,
-    imageUrl: PropTypes.string
+    imageUrl: PropTypes.string,
+    title: PropTypes.string
 };
 
 export default UserAvatar;
